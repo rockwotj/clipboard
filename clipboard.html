@@ -1,0 +1,17 @@
+<style>
+  textarea.form-control {
+    height: 95%;
+    resize: none;
+  }
+  h1 {
+    display: inline-block;
+  }
+  a {
+    margin-top: 30px;
+  }
+</style>
+<div class="container">
+  <h1>The Clipboard</h1>
+  <a class="btn btn-sm btn-warning pull-right" ng-click="logout()">Logout</a>
+  <textarea ng-model="text" ng-change="onChange()" class="form-control"></textarea>
+</div>

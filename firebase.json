@@ -1,0 +1,14 @@
+{
+  "firebase": "rockwotj-clipboard",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**",
+    "bs-config.json"
+  ],
+  "rewrites": [ {
+    "source": "**",
+    "destination": "/index.html"
+  } ]
+}
