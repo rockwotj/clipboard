@@ -1,4 +1,4 @@
-angular.module('project',['firebase', 'ngRoute']) 
+angular.module('project',['firebase', 'ngRoute', 'rosefire']) 
   .value('fbURL', 'https://rockwotj-clipboard.firebaseio.com/')
   .value('rfToken', 'e5daaf8793be0ef8d35f23bcfccd8c948bfa34f404f1702003a90587415b6ad19934911f2f2bf0c3a79ce29d813c0235qcj8r9KAk/QnAnwyElDxqJGkxPeKINbOp/PVYOLB1b6fB5i6n1DYfa6QCfonbJ/s9hqUoXHWDE/FrmtWN0RWmg==')
   .service('fbRef', function(fbURL) {
@@ -38,22 +38,19 @@ function MainCtrl($scope, $firebaseAuth, $firebaseObject, fbRef, $location) {
   }
 }
 
-function LoginCtrl($scope, rfToken, fbRef, $window, $firebaseAuth, $location) {
+function LoginCtrl($scope, rfToken, fbRef, Rosefire, $firebaseAuth, $location) {
   var authObj = $firebaseAuth(fbRef);
   $scope.login = function() {
     console.log('Logging in with rosefire..');
-    $window.Rosefire.getToken(rfToken, function(err, token) {
-       if (err) {
-          console.error(err);
-       } else {
-         authObj.$authWithCustomToken(token)
-         .then(function(authData) {
-          console.log(authData);
-          $location.path('/');
-         }).catch(function(err) {
-          console.error(err);
-         });
-       }
-    });
+    Rosefire.signIn(rfToken)
+      .then(function(token) {
+        return authObj.$authWithCustomToken(token);
+      })
+      .then(function(authData) {
+        $location.path('/');
+      })
+      .catch(function(err) {
+        console.error(err);    
+      });
   };
 }
